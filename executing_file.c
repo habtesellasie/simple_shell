@@ -3,12 +3,12 @@
 char *get_command_line(int file_dr, char *c);
 
 /**
- * execute_file_cmd - the function that executes commands in a file. 
- * The file has a single command on each line.
+ * execute_file_cmd - the function that executes commands in a file
+ * The file has a single command on each line
  * Every command should be on its own line and file must have blank line at end
  * @filename: name of the file
  * @var: var_t structure
- * Return: 0 if success, -1 if file cannot be accessed, else 1 
+ * Return: 0 if success, -1 if file cannot be accessed, else 1
  */
 int execute_file_cmd(char *filename, var_t *var)
 {

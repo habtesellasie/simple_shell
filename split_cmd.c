@@ -4,7 +4,8 @@
  * split_commands - splits a command into two strings
  * @command: to split the command
  * @delim: set of bytes that delimits the tokens in command
- * Return: Null terminated array containing two strings if not fail or NULL if fail
+ * Return: Null terminated array containing two strings
+ * if not fail or NULL if fail
  */
 char **split_commands(char *command, const char *delim)
 {

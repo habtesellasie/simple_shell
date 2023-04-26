@@ -28,10 +28,11 @@ char *command_sub(char *cmd)
 }
 
 /**
- * create_new_command - the function that creates new command by doing
- * command substitution for $$
+ * create_new_command - the function that creates
+ * new command by doing command substitution for $$
  * @cmd: command string
- * Return: New command with substitution done, or NULL in case of an error
+ * Return: New command with substitution done,
+ * or NULL in case of an error
  */
 char *create_new_command(char *cmd)
 {
@@ -75,7 +76,8 @@ char *create_new_command(char *cmd)
 }
 
 /**
- * check_substitution - the function that checks whether the command has the sub
+ * check_substitution - the function that checks
+ * whether the command has the sub
  * @command: command to be check
  * Return: 1 if a substitution is to be done, 0 if there's none
  */
@@ -93,7 +95,8 @@ int check_substitution(char *command)
 }
 
 /**
- * get_ppid - the function that gets the parent id and append it to the command
+ * get_ppid - the function that gets the parent id
+ * and append it to the command
  * @cmd: command to append the parent id
  * @position: index to start appending
  * Return: 0 on success, 1 on failure
@@ -120,8 +123,8 @@ int get_ppid(char *cmd, size_t *position)
 }
 
 /**
- * _realloc - the fanction that reallocates new command string in case it doesn't
- * fit the previous command
+ * _realloc - the fanction that reallocates new command string
+ * in this case it doesn't fit the previous command
  * @new_command: command to reallocate
  * @bufsize: size of the command being reallocated
  * Return: New command string with reallocated memory

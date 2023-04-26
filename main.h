@@ -97,7 +97,6 @@ int ksh_setenv(char **argv, var_t *var);
 int ksh_unsetenv(char **argv, var_t *var);
 int ksh_env(char **argv, var_t *var);
 
-
 Separator get_next_separator(const char *command);
 int error_not_found(char *cmd, var_t *var);
 int error_cd(char **argv, var_t *var, int i);
