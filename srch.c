@@ -7,33 +7,36 @@
  */
 char *search_path(char *filename)
 {
-	char *path, *filepath, **paths;
-	int position = 0;
+    char *path, *filepath, **paths;
+    int position = 0;
 
-	path = _getenv("PATH");
-	paths = parse_path(path);
+    path = _getenv("PATH");
+    paths = parse_path(path);
 
-	while (paths[position])
-	{
-		struct stat st;
+    while (paths[position])
+    {
+        struct stat st;
 
-		filepath = get_abs_path(paths[position], filename);
+        filepath = get_abs_path(paths[position], filename);
 
-		if (!filepath)
-			exit_search_safe(paths, filepath);
+        if (!filepath)
+        {
+            exit_search_safe(paths, filepath);
+            return (NULL);
+        }
 
-		if (stat(filepath, &st) == 0)
-		{
-			free(paths[0]);
-			free(paths);
-			return (filepath);
-		}
-		position++;
-		free(filepath);
-	}
-	free(paths[0]);
-	free(paths);
-	return (NULL);
+        if (stat(filepath, &st) == 0)
+        {
+            free(paths[0]);
+            free(paths);
+            return (filepath);
+        }
+        position++;
+        free(filepath);
+    }
+    free(paths[0]);
+    free(paths);
+    return (NULL);
 }
 
 /**
@@ -44,23 +47,23 @@ char *search_path(char *filename)
  */
 char *get_abs_path(char *filedir, char *filename)
 {
-	char *filepath;
+    char *filepath;
 
-	filepath = strdup(filedir);
-	if (!filepath)
-		return (NULL);
+    filepath = strdup(filedir);
+    if (!filepath)
+        return (NULL);
 
-	filepath = realloc(filepath, (strlen(filepath) + strlen(filename) + 2));
-	if (!filepath)
-	{
-		free(filepath);
-		return (NULL);
-	}
+    filepath = realloc(filepath, (strlen(filepath) + strlen(filename) + 2));
+    if (!filepath)
+    {
+        free(filepath);
+        return (NULL);
+    }
 
-	strcat(filepath, "/");
-	strcat(filepath, filename);
+    strcat(filepath, "/");
+    strcat(filepath, filename);
 
-	return (filepath);
+    return (filepath);
 }
 
 /**
@@ -71,44 +74,44 @@ char *get_abs_path(char *filedir, char *filename)
  */
 char **parse_path(char *path)
 {
-	size_t buffSize = BUF_SIZE, position = 0;
-	char *token, *localpath;
-	char  **token = malloc(sizeof(char *) * buffSize);
+    size_t buffSize = BUF_SIZE, position = 0;
+    char **tokens = malloc(sizeof(char *) * buffSize);
+    char *localpath, *token;
 
-	if (!token)
-	{
-		perror("parse_path: Memory allocation failed");
-		exit(EXIT_FAILURE);
-	}
-	localpath = strdup(path);
-	if (!localpath)
-	{
-		perror("parse_path: Memory allocation failed");
-		free(token);
-		exit(EXIT_FAILURE);
-	}
+    if (!tokens)
+    {
+        perror("parse_path: Memory allocation failed");
+        exit(EXIT_FAILURE);
+    }
+    localpath = strdup(path);
+    if (!localpath)
+    {
+        perror("parse_path: Memory allocation failed");
+        free(tokens);
+        exit(EXIT_FAILURE);
+    }
 
-	token = _strtok(localpath, ":");
-	while (token)
-	{
-		token[position++] = token;
-		token = _strtok(NULL, ":");
+    token = _strtok(localpath, ":");
+    while (token)
+    {
+        tokens[position++] = token;
+        token = _strtok(NULL, ":");
 
-		if (position >= buffSize)
-		{
-			buffSize += BUF_SIZE;
-			token = realloc(token, sizeof(char *) * buffSize);
-			if (!token)
-			{
-				perror("Memory allocation failed");
-				free(localpath);
-				free(token);
-				exit(EXIT_FAILURE);
-			}
-		}
-	}
-	token[position] = NULL;
-	return (token);
+        if (position >= buffSize)
+        {
+            buffSize += BUF_SIZE;
+            tokens = realloc(tokens, sizeof(char *) * buffSize);
+            if (!tokens)
+            {
+                perror("Memory allocation failed");
+                free(localpath);
+                free(tokens);
+                exit(EXIT_FAILURE);
+            }
+        }
+    }
+    tokens[position] = NULL;
+    return (tokens);
 }
 
 /**
@@ -119,15 +122,16 @@ char **parse_path(char *path)
  */
 void exit_search_safe(char **paths, char *filepath)
 {
-	free(paths[0]);
-	free(paths);
+    free(paths[0]);
+    free(paths);
 
-	if (filepath)
-		free(filepath);
+    if (filepath)
+        free(filepath);
 
-	if (errno)
-	{
-		perror("search_path: memory allocation failure\n");
-		exit(EXIT_FAILURE);
-	}
+    if (errno)
+    {
+        perror("search_path: memory allocation failure\n");
+        exit(EXIT_FAILURE);
+    }
 }
+
