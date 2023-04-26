@@ -11,7 +11,7 @@ int execute_single_command(char **argv, var_t *var)
 {
 	char *program_name;
 
-	program_name = check_program_name(argv[0]);
+	program_name = check_prog_name(argv[0]);
 	if (program_name)
 	{
 		return (run_child(program_name, argv, environ));
